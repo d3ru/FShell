@@ -1,0 +1,60 @@
+# fzip.cif
+# 
+# Copyright (c) 2010 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+# 
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+==name fzip
+
+==short-description
+
+Compress and decompress files.
+
+==long-description
+
+Generates compressed archives of files or extracts files from a compressed archive. Both 'zip' and 'gzip' file formats are support ('zip' is used by default).
+
+==argument filename archive optional
+
+The zip archive to create or extract.
+
+==option bool v verbose
+
+Enables additional reporting of information regarding the zip/unzip process.
+
+==option bool u unzip
+
+Extract files from the specified archive.
+
+==option filename d directory
+
+The directory to extract files into. Must be used in conjunction with '--unzip'.
+
+==option bool r recurse
+
+Include sub-directories and any files contained therein when archiving.  Must be used in conjunction with '--unzip'.
+
+==option filename f file multiple
+
+A file to archive. Only applicable when creating a new archive.
+
+==option enum t compression-type
+
+==enum-value zip
+
+PK Zip format (the default if not specified).
+
+==enum-value gzip
+
+GNU Zip format. Note, this format can only handle a single file.
+
+==copyright
+
+Copyright (c) 2008-2010 Accenture. All rights reserved.
+
