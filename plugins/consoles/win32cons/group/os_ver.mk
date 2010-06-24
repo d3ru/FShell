@@ -10,7 +10,7 @@
 # Accenture - Initial contribution
 #
 MAKMAKE :
-	perl -S emkdir.pl $(EPOCROOT)epoc32\build\fshell/win32cons\generated
+	perl $(EPOCROOT)epoc32\tools\emkdir.pl $(EPOCROOT)epoc32\build\fshell/win32cons\generated
 	perl .\os_version_h.PL > $(EPOCROOT)epoc32\build\fshell/win32cons\generated\os_version.h
 
 CLEAN :

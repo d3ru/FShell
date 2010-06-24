@@ -15,11 +15,11 @@ GENERATED_SOURCE = $(GENERATED_SOURCE_DIR)\defaultfontdata.inl
 MAKMAKE : $(GENERATED_SOURCE)
 
 $(GENERATED_SOURCE) : ..\data\font_6x10.PNG
-	perl -S emkdir.pl $(GENERATED_SOURCE_DIR)
+	perl $(EPOCROOT)epoc32\tools\emkdir.pl $(GENERATED_SOURCE_DIR)
 	echo perl .\bin2lit.pl KDefaultFontImageData ^< ..\data\font_6x10.PNG ^> $(GENERATED_SOURCE)
 	perl .\bin2lit.pl KDefaultFontImageData < ..\data\font_6x10.PNG > $(GENERATED_SOURCE)
 
 CLEAN :
-	perl -S ermdir.pl $(GENERATED_SOURCE_DIR)
+	perl $(EPOCROOT)epoc32\tools\ermdir.pl $(GENERATED_SOURCE_DIR)
 
 BLD FREEZE RESOURCE LIB CLEANLIB RESOURCE SAVESPACE RELEASABLES FINAL : 

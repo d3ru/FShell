@@ -13,11 +13,11 @@ GENERATED_SOURCE_DIR = $(EPOCROOT)epoc32\build\fshell\core\generated
 GENERATED_SOURCE = $(GENERATED_SOURCE_DIR)\fshell_version.cpp
 
 MAKMAKE :
-	perl -S emkdir.pl $(GENERATED_SOURCE_DIR)
+	perl $(EPOCROOT)epoc32\tools\emkdir.pl $(GENERATED_SOURCE_DIR)
 	echo perl .\genver.pl $(PLATFORM) $(CFG)
 	perl .\genver.pl $(PLATFORM) > $(GENERATED_SOURCE)
 
 CLEAN :
-	perl -S ermdir.pl $(GENERATED_SOURCE_DIR)
+	perl $(EPOCROOT)epoc32\tools\ermdir.pl $(GENERATED_SOURCE_DIR)
 
 BLD FREEZE LIB CLEANLIB RESOURCE SAVESPACE RELEASABLES FINAL : 
