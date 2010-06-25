@@ -31,7 +31,7 @@ use CommandInfoFile;
 # Constants.
 #
 
-my $kCpp = "\\epoc32\\gcc\\bin\\cpp -I. ";
+my $kCpp = "$ENV{EPOCROOT}epoc32\\gcc\\bin\\cpp -I. ";
 
 
 #

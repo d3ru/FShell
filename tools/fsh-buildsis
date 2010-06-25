@@ -29,7 +29,7 @@ use fshu;
 
 # Have to hard-code the old GCC CPP path, because SBS puts the new version in %PATH%, and that breaks our macros. Need to fix properly or fix the actual macros
 #my $kCpp = "cpp -P -I../../include -I. -include ltk_makesis_defs.iby";
-my $kCpp = "\\epoc32\\gcc\\bin\\cpp -P -I../../include -I. -include fsh_makesis_defs.iby";
+my $kCpp = "$ENV{EPOCROOT}epoc32\\gcc\\bin\\cpp -P -I../../include -I. -include fsh_makesis_defs.iby";
 
 #
 # Globals.
