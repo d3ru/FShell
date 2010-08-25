@@ -1,0 +1,46 @@
+# variant.cif
+# 
+# Copyright (c) 2010 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+# 
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+==name variant
+
+==short-description
+
+Determines the hardware variant and whether or not that matches the variant specified via the command line.
+
+==long-description
+
+If the device matches the given command line options, KErrNone is returned. If not, KErrNotSupported is returned. Note that the command will not print any error message in the case of the variant not being supported, so that it doesn't make script output untidy. If an error message is required, use the C<--verbose> option.
+
+In addition there are two special variants understood by all implementations of this command: C<wins> and C<target> for WINS[CW] emulator and non-emulator platforms respectively.
+
+Example usage:
+
+    variant h4 && do-something-h4-specific
+    variant wins && do-something-emulator-specific
+    variant h4 h6 && do-something-for-h4-and-h6
+
+==option uint u uid multiple
+
+Test whether the device matches any of the specified machine UIDs.
+
+==option bool v verbose
+
+Display verbose output.
+
+==argument string variantname optional multiple
+
+A symbolic name for the hardware variant may be specified instead of having to know the machine uid. This maximises compatibility with platforms that provide a custom variant.exe and/or that need more than just the machine UID to determine the variant. Check the platform-specific documentation for what variant string is used to identify that platform's hardware. If multiple variant names are specified KErrNone is returned if any one of them matches.
+
+==copyright
+
+Copyright (c) 2008-2010 Accenture. All rights reserved.
+

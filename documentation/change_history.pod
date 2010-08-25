@@ -1,0 +1,45 @@
+# change_history.pod
+#
+# Copyright (c) 2010 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+#
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+__END__
+
+=head1 FShell Change History
+
+=head2 Release 001 [Not yet officially made]
+
+=over 5
+
+=item *
+
+Added L<terminal keyboard|terminalkeyboardcons> console, for platforms that support Terminal Keyboard and Trace Core.
+
+=item *
+
+Fixed a defect in iosrv.exe that caused a panic if a foreground read object was attached to a different end point. This was due to the read object being notified of a change in foreground before its iEndPoint member was updated. This member is now updated before attempting the attach, and is set to NULL in the event of a leave (resulting in the read object being left in an unattached state).
+
+=item *
+
+More build fixes. Changed the documentation builder to automatically prepend C<%EPOCROOT%> (converted to a path relative form) to pre-processor include path options that start with F<epoc32>. Prevously C<$(EPOCROOT)> was prepended in the makefile, which broke the documentation build because the pre-processor will only accept relative path include options.
+
+=item *
+
+Added C<--codesegs> option to L<ps|commands::ps>.
+
+=head2 Release 000.1
+
+Prerelease to the SF staging server.
+
+=head1 Copyright
+
+Copyright (c) 2010 Accenture. All rights reserved.
+
+=cut
