@@ -1,0 +1,475 @@
+# change_history.pod
+#
+# Copyright (c) 2010 - 2011 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+#
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+__END__
+
+=head1 fshell Change History
+
+=head2 Release 006 **Not yet released**
+
+=head3 New features
+
+=over 5
+
+=item *
+
+Added L<proxyserver|commands::proxyserver>, L<traceswitch|commands::traceswitch> and L<startapp|commands::startapp> commands.
+
+=item *
+
+Added support for glinfo to display GPU memory info from the eglQueryProfilingDataNOK EGL extension.
+
+=back
+
+=head3 Bugfixes
+
+=over 5
+
+=item *
+
+Changed fshell's command factory to only treat files in '\resource\cif\fshell' that end with '.cif' as commands. This is to allow other extensions to be used for things like '==include' statements.
+
+=back
+
+=head2 Release 005
+
+=head3 New features
+
+=over 5
+
+=item *
+
+Added support for Nokia TB92- or MCL-based minigui platform, in \build\s60\minigui.
+
+=item *
+
+Added new single launcher app instead of the multiple "fshell (USB)", "fshell (BT)" etc icons. The new launcher is located in the RnD tools folder.
+
+=item *
+
+Added the ability for fshell commands to request files from the PC via muxcons. Fdb now uses this to request map files for any codesegs in the stacktrace. The relevant API is C<RIoConsole::RequestFile()> with muxcons implementing the C<DataRequester> console extension.
+
+=item *
+
+Added the L<request|commands::request>, L<title|commands::title> and L<attrib|commands::attrib> commands.
+
+=item *
+
+Added support for changing the default C<c:\E<gt>> prompt by setting an environment variable C<FSHELL_PROMPT>. To put a newline between commands you could use:
+
+    export FSHELL_PROMPT "^r^n^$PWD>"
+
+Note the use of C<^$> to prevent C<$PWD> being expanded when export runs rather than when C<$FSHELL_PROMPT> is evaluated.
+
+=item *
+
+C<version -v> now displays the Mercurial revision that the code was built from, as per C<hg id>, if available.
+
+=back
+
+=head3 Bugfixes
+
+=over 5
+
+=item *
+
+Build fixes for platforms without CONE or apparc. Fixed rare crash when console creation returned an error. Fixed guicons drawing issue when embedded in another control.
+
+=item *
+
+Fix for bug 3285378 "chunkinfo <baseAddress> crashes with KERN-EXEC 3"
+
+=item *
+
+fdb now prints a notification (and automatically attaches if nothing focussed) when a thread crashes.
+
+=item *
+
+Removed compile-time dependancies on usbostcomm.h. As a result the C<FSHELL_OST_SUPPORT> macro is removed, and the RnD fshell SIS no longer requires CODA to be installed to use muxcons.
+
+=item *
+
+C<rm -f> can now delete binaries in \sys\bin that are held open because of demand paging. (Only applies to TCB-capable builds of fshell, when deleting an exe/dll from c:\sys\bin which is bytepair compressed and currently loaded on environments with code paging enabled).
+
+=item *
+
+Filename arguments marked as C<multiple> no longer are assumed to also have the C<optional> attribute.
+
+=back
+
+=head2 Release 004.2
+
+=over 5
+
+=item *
+
+Fixed bug for using muxserver.exe with public CODA. Muxcons currently relies on CODA being installed if using S60 builds.
+
+=back
+
+=head2 Release 004.1
+
+=over 5
+
+=item *
+
+Fixed missing IBY include; start-stdioserver.script now works.
+
+=item *
+
+Fixed device freeze when unplugging USB cable during fshell connection setup.
+
+=back
+
+=head2 Release 004
+
+=head3 New features
+
+=over 5
+
+=item *
+
+Added support for conditional L<if|commands::if> statements in fshell scripts. Usage:
+
+    if var ERR == 0
+        echo "No error"
+    else
+        echo "Error $ERR occurred."
+    endif
+
+=item *
+
+Added support for L<while|commands::while> loops. Usage:
+
+    export I 0
+    while var I != 10
+        echo "Loop iteration $I"
+        var I add 1
+    endwhile
+
+L<break|commands::break> and L<continue|commands::continue> commands are also supported, with C-style semantics.
+
+=item *
+
+Added fshell_stdioserver.exe and start-stdio.script to present an fshell-aware replacement for PIPS's stdioserver.exe.
+
+=item *
+
+Scripts located in F<\system\console\scripts\> are now first-class objects from the point of view of the command-line interpreter. This means you can launch a script by typing just the script name, without needing to prepend it with C<fshell>. Assuming a script called c:\system\console\scripts\myscript.script, the following are equivalent:
+
+    c:\>fshell c:\system\console\scripts\myscript.script
+    c:\>fshell myscript.script
+    c:\>fshell myscript
+    c:\>myscript.script
+    c:\>myscript
+
+=item *
+
+Added L<qpluginloader|commands::qpluginloader> command. Added more comparison operations to var command. Added skip operation ('z') to debug command. Improved syntax of version command.
+
+=back
+
+=head3 Bugfixes
+
+=over 5
+
+=item *
+
+Fixed crash when running C<fshell --console defcons> from within an fshell session.
+
+=item *
+
+Fixed muxserver crash on hardware that enforces aligned memory accesses.
+
+=item *
+
+Fixed stack overflow in objinfo command (bug 3188256). For some time objinfo had been non-functional on all but WINS builds.
+
+=item *
+
+Symbols for the current EXEs codeseg were not being displayed in fdb's "stack" command unless "stack all" was specified. Fixed. Also improved display of non-symbol data in "stack all" format.
+
+=item *
+
+Reporting of errors from console creation now correctly reflected in fshell's return code. Added warning if a CCommandBase::Printf() format string overflows.
+
+=back
+
+=head2 Release 003
+
+=head3 Highlights
+
+=over 5
+
+=item *
+
+Fshell moved to http://sourceforge.net/projects/fshell (although if you're reading this, you probably already knew that).
+
+=item *
+
+Performance improvements to iosrv (which make use of the BinaryMode extensions when available), that means things like bulk data transfers over ymodem are much faster (around 8x). All relevant commands and consoles updated to use Binary mode where necessary.
+
+=item *
+
+Support for PC-side muxcons tool, by means of a new muxserver command which permits multiple fshell sessions to be multiplexed over a single connection.
+
+=back
+
+=head3 New features
+
+=over 5
+
+=item *
+
+Added L<ost|commands::ost> command for debugging USB OST connections. Added build macro C<FSHELL_OST_SUPPORT>.
+
+=item *
+
+Added L<C<FSHELL_QT_SUPPORT>|internal::common_mmh/item_FSHELL_QT_SUPPORT> build macro and enabled it on S^3 and tb92 platforms. Sysinfo command now returns Qt version info if Qt is available.
+
+=item * 
+
+Added L<whoami|commands::whoami> command for identifying the current fshell process.
+
+=item *
+
+Added new console extension functions: BinaryMode::Read() and BinaryMode::Write().
+
+=back
+
+=head3 Bugfixes
+
+=over 5
+
+=item *
+
+Fixed objinfo command so that it works on modern (S^3 or later, S60 5th or later) baselines. Added C<--match> option.
+
+=item *
+
+Fixed reporting of exit reasons in fshell pipelines. (Previously the "***PANIC***" prints would incorrectly report an exit reason of -13 for any thread command that exited with a non-negative error code, so for example "KERN-EXEC 0" would appear to be "KERN-EXEC -13".)
+
+=item *
+
+Fixed crash in undertaker command if its worker thread couldn't be instanciated.
+
+=item *
+
+Fixed memory leak (which eventually could cause a crash) in iosrv.
+
+=item *
+
+Added colour support to snake and --unicode option to fed.
+
+=item *
+
+Added USB fshell icon and FSHELL_PIPS_SUPPORT to default S^3 build.
+
+=item *
+
+The columns no longer jump around in the top command. Cleaned up swi's output and added version and file info to the --verbose list.
+
+=item *
+
+Some improvements to syntax of rcomm command. Also added more test modes for testing reads and writes.
+
+=item *
+
+Fixed stack overflow crash in ls command when using --recurse with a directory tree deeper than nine or so levels (see ls's smoketest).
+
+=item *
+
+Fixed size calculation bug in fed which made it almost impossible to use on certain consoles and unreliable to redraw on others.
+
+=item *
+
+Changed cat command to open files with EFileShareReadersOnly permissions, meaning it is now possible to cat a file at the same time as, for example, having the file open in fed. Also changed cat to bail out with an error if a file couldn't be opened, instead of printing a warning but still returning KErrNone.
+
+=item *
+
+Fixed long-standing bug in L<hello's|commands::hello> C<--color> option that caused the text colour to get stuck on cyan after the command exited.
+
+=item *
+
+Changed match command so end-anchored match strings (ie ones not ending with a "*") behave as expected.
+
+=item *
+
+Added support for detecting linkage against ABSENT ordinals to chkdeps command, improved its error handling and fixed decoding of bytepair-compressed binaries.
+
+=item *
+
+Fixed hang (actually stray signal panic) in fdb. Fixed map file parsing and reporting of symbols in RAM-loaded EXE codesegments.
+
+=item *
+
+Fixed long-standing bug in VT100 console size detect that caused it to give up and make fshell think the console window was tiny if there was junk data in the serial port buffer.
+
+=item *
+
+Introduced iocli_qt.dll to hold Qt<->fshell integration APIs. First is C<IoUtils::GetIosrvDebugHandler()> that retuns a QtMsgHandler that routes to fshell. qDebug is rerouted to iosrv stdout, qFatal/qWarning to stderr.
+
+=item *
+
+Hal command's --device option now does what it's supposed to.
+
+=item *
+
+Fixed bug in win32cons where it truncated any writes > 256 chars. Most obvious with missing linefeeds in drvinfo -v.
+
+=item *
+
+Fixed hang in iosrv when running C<cat E<lt> file.txt> and the file was larger than the cat buffer size and contained multi-byte UTF-8 characters. Stopped incorrect UTF-8 escaping when redirecting to or from a file in binary mode.
+
+=item *
+
+Added --cd option to fshell, to set the working directory.
+
+=back
+
+=head2 Release 002
+
+=over 5
+
+=item *
+
+Open signing of fshell SIS files is now supported for production S60 handsets. Build fshell with the C<FSHELL_OPEN_SIGNED> macro defined (and without defining C<FSHELL_CAP_ALL> or C<FSHELL_PROTECTED_UIDS>) in your platform.mmh and submit \epoc32\fshell\fshell.unsigned.sis to https://www.symbiansigned.com/app/page/public/openSignedOnline.do . The following commands are not available when using Open Signing due to Platform Security restrictions: fdb; kerninfo; chunkinfo; svrinfo; objinfo; sudo; fsck; localdrive; ramdefrag; readmem; reboot; setcritical; setpriority; showdebug. Others such as chkdeps, e32header, ps, and fshell itself will run but in a restricted capacity (for example, fshell will no longer allow you to modify files in the \sys\bin directory).
+
+=item *
+
+Changed S60 3rd and 5th platforms to default to the Open Signed configuration, as that's what most people will be using.
+
+=item *
+
+Commands can now define a C<==smoke-test> section in their CIF files, which defines a snippet of fshell script that will be run as part of C<fshell smoketest> or by invoking L<ciftest|commands::ciftest> directly. See the ciftest documentation for more details.
+
+=item *
+
+Fixed crash in fed's handling of UTF-8 sequences split over a block boundary. Fixed a link bug in the autogenerated documentation.
+
+=item *
+
+Added support for automatically starting a USB personality to vt100usbcons via a new C<personality=x> key-value pair. See the L<vt100usbcons|vt100cons/usb variant> documentation for more information.
+
+=item *
+
+Added support for beagleboard to sf\3tshell platform.
+
+=item *
+
+Updated chkdeps command so that it works with byte-pair compressed binaries (experimental).
+
+=item *
+
+Added L<showdebug|commands::showdebug> command to redirect RDebug::Print()s to the console.
+
+=item *
+
+Added L<input|commands::input> command to allow hardware key presses to be easily simulated via a console.
+
+=item *
+
+Added L<base64|commands::base64> command for encoding to and decoding from Base64.
+
+=item *
+
+Added C<CBtraceAppStart> to btrace_parser.dll. Also changed the interface of C<CBtraceAppResponse> to use window group name patterns rather than process ids (to make it consistent with other parts of the API).
+
+=item *
+
+Fshell now reuses threads for built-in commands that execute in quick succession. The thread pool takes into account the requirements of the command when assigning a thread (eg whether it needs to share a heap with its parent command) and creates a new one if necessary. Excess threads are cleaned up after a short idle period (currently 1 second).
+
+=item *
+
+Added support for L<source|commands::source> reading from C<stdin> (primarily to better support remote execution of scripts).
+
+=item *
+
+Fixed a bug in iocli.dll that could cause environment variable updates to be ignored.
+
+=item *
+
+Fixed a bug in fshell that could cause 'foreach' commands to exit prematurely.
+
+=item *
+
+Added new console extension functions: ConsoleSize::ReportedCorrectly(), ConsoleSize::NotifySizeChanged().
+
+=item *
+
+Removed iosrv.ini's console_size_detect setting. It is now calculated on a per-console basis whether the console requires size detection, based on whether the console implements the C<ConsoleSize::ReportedCorrectly()> extension. All the fshell-supplied consoles have been updated to implement this extension as appropriate, meaning that size detection will no longer be run unnecessarily on (for eg) win32cons when you run fshell.bat. As part of this work, the laziness of defcons (CDefaultConsole) has been removed as it overlapped unnecessarily with CLazyConsole. Defcons's sole responsibility now is to pick an appropriate console; lazycons is responsible for making sure it isn't instantiated prematurely.
+
+=item *
+
+Changed the CCommandFactory logic that searches for commands; it now scans \resource\cif\fshell rather than \sys\bin. This means that the 'help' command now works on the emulator and on installs without all capabilities.
+
+=back
+
+=head2 Release 001
+
+=over 5
+
+=item *
+
+First release of fshell through the Symbian Foundation.
+
+=item *
+
+Added L<terminal keyboard|terminalkeyboardcons> console, for platforms that support Terminal Keyboard and Trace Core. On such platforms comm.script (and thus -DFSHELL_AUTOSTART) will use it if there is no better match for the hardware platform.
+
+=item *
+
+Fixed a defect in iosrv.exe that caused a panic if a foreground read object was attached to a different end point. This was due to the read object being notified of a change in foreground before its iEndPoint member was updated. This member is now updated before attempting the attach, and is set to NULL in the event of a leave (resulting in the read object being left in an unattached state). Fixed race condition and hang in C<pcons start>.
+
+=item *
+
+More build fixes. Changed the documentation builder to automatically prepend C<%EPOCROOT%> (converted to a path relative form) to pre-processor include path options that start with F<epoc32>. Prevously C<$(EPOCROOT)> was prepended in the makefile, which broke the documentation build because the pre-processor will only accept relative path include options.
+
+=item *
+
+Added C<--codesegs> option to L<ps|commands::ps> and C<--no-write> option to L<gobble|commands::gobble>.
+
+=item *
+
+Added C<ENotifyKeypresses> and C<ECaptureCtrlC> flags to CCommandBase, so commands can get keypresses and handle ctrl-C via callbacks instead of having to implement custom active objects. As part of this extended the CCommandBase extension interface to MCommandExtensionsV2 for the new virtual functions KeyPressed(TUint aKeyCode, TUint aModifiers) and CtrlCPressed(). sudo now cleans up correctly by using ECaptureCtrlC.
+
+=item *
+
+fshell's current working directory is now normalised (via new TFileName2::Normalize function) so that the case matches what's on the filesystem.
+
+=item *
+
+Fixed crash in L<start's|commands::start> C<--timeout> option and in L<chunkinfo|commands::chunkinfo> when specifying a chunk address.
+
+=item *
+
+The L<dialog|commands::dialog> command no longer misreports the button that was pressed when running under the text windowserver.
+
+=item *
+
+Changed built-in commands maximum heap size from 256KB to 1MB. This is because on a current S60 device 256KB is just too small for commands like chunkinfo to display all the chunks on the system. Also have seen problems listing large directories and deleting large numbers of files, that this change should help with too.
+
+=back
+
+=head2 Release 000.2-000.5
+
+Test releases with build fixes.
+
+=head2 Release 000.1
+
+Prerelease to the SF staging server.
+
+=head1 Copyright
+
+Copyright (c) 2010 - 2011 Accenture. All rights reserved.
+
+=cut
