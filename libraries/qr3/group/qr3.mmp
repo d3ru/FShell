@@ -1,0 +1,65 @@
+// qr3.mmp
+// 
+// Copyright (c) 2008 - 2010 Accenture. All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of the "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+// 
+// Initial Contributors:
+// Accenture - Initial contribution
+//
+
+#include <fshell/common.mmh>
+
+TARGET			QR3.dll
+TARGETTYPE		DLL
+UID				0x1000008D FSHELL_UID_QR3
+
+CAPABILITY		FSHELL_CAP_MMP_NORMAL
+
+#include <fshell/fsh_system_include.mmh>
+
+USERINCLUDE		..\inc
+SOURCEPATH		..\src
+
+SOURCE			propertywatcher.cpp
+SOURCE			keycapture.cpp
+SOURCE			utils.cpp
+SOURCE			objectlist.cpp
+SOURCE			heap.cpp
+SOURCE			NotifierProxy.cpp
+
+#ifdef FSHELL_MEMORY_ACCESS_SUPPORT
+SOURCE			KernLbxModel.cpp
+SOURCE			openfilesListboxdata.cpp
+SOURCE			serverlistboxdata.cpp
+SOURCE			threadListboxdata.cpp
+SOURCE			featreglistboxdata.cpp
+SOURCE			hallistboxdata.cpp
+SOURCE			sandbox.cpp
+#if defined(FSHELL_WSERV_SUPPORT) && defined(FSHELL_APPARC_SUPPORT) // Technically could work without apparc support but looks a bit too much effort to split it out
+SOURCE			wglistboxdata.cpp
+#endif
+SOURCE			msgqlistboxdata.cpp mutexlistboxdata.cpp
+SOURCE			semaphorelistboxdata.cpp timerlistboxdata.cpp
+#endif
+
+#ifdef FSHELL_PLATFORM_UIQ
+MACRO			INCLUDE_UIQ_DEFINITIONS
+#endif
+
+LIBRARY			euser.lib
+LIBRARY			efsrv.lib
+LIBRARY			clogger.lib
+LIBRARY			hal.lib ecom.lib
+LIBRARY			ltkutils.lib
+
+#ifdef FSHELL_WSERV_SUPPORT
+LIBRARY			ws32.lib
+LIBRARY			gdi.lib
+#endif
+
+#ifdef FSHELL_APPARC_SUPPORT
+LIBRARY			apparc.lib apgrfx.lib apmime.lib 
+#endif

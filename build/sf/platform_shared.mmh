@@ -1,0 +1,38 @@
+// platform_shared.mmh
+// 
+// Copyright (c) 2010 Accenture. All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of the "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+// 
+// Initial Contributors:
+// Accenture - Initial contribution
+//
+
+#ifndef FSHELL_PLATFORM_SHARED_MMH
+#define FSHELL_PLATFORM_SHARED_MMH
+
+#define FSHELL_CAP_ALL
+#define FSHELL_PROTECTED_UIDS
+
+// FSHELL_PLATFORM_FOUNDATION is defined by .\2\platform.mmh or .\3\platform.mmh
+#define FSHELL_PLATFORM_S60 7 // for ease of macroing, SF 1 is considered S60 6, SF 2 as S60 7, etc
+
+#ifdef WINS
+#define FSHELL_LAUNCHER_SUPPORT_LOCAL
+#define FSHELL_LAUNCHER_SUPPORT_RCONS
+#else
+#define FSHELL_LAUNCHER_SUPPORT_LOCAL
+#define FSHELL_LAUNCHER_SUPPORT_TCP
+#define FSHELL_LAUNCHER_SUPPORT_BT
+#define FSHELL_LAUNCHER_SUPPORT_SERIAL "port=COMM::1, rate=115200"
+#endif
+
+#define FSHELL_NO_OPENVG_SUPPORT
+
+#if FSHELL_PLATFORM_FOUNDATION >= 3
+#define FSHELL_NO_DOBJECTIX_SUPPORT
+#endif
+
+#endif // FSHELL_PLATFORM_SHARED_MMH
