@@ -1,0 +1,27 @@
+#!fshell
+# smoketest.script
+# 
+# Copyright (c) 2010 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+# 
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+# If everything passes, you shouldn't see anything much outputted. If you see any errors, run the relevant script without the -k option to get more details
+
+echo Running fshell-basic-test.script...
+fshell -k $SCRIPT_PATH\fshell-basic-test.script
+echo Running fshell-last-test.script...
+fshell -k $SCRIPT_PATH\fshell-last-test.script > /dev/null # One of the last tests prints garbage to stdout
+echo Running fshell-ccommandbase-test.script...
+fshell -k $SCRIPT_PATH\fshell-ccommandbase-test.script
+echo Running fshell-unicode-test.script...
+fshell -k $SCRIPT_PATH\fshell-unicode-test.script
+echo Running fshell-scriptcif-test.script...
+fshell -k $SCRIPT_PATH\fshell-scriptcif-test.script
+echo Running ciftest...
+ciftest -k

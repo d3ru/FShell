@@ -1,0 +1,59 @@
+# drvinfo.cif
+# 
+# Copyright (c) 2010 Accenture. All rights reserved.
+# This component and the accompanying materials are made available
+# under the terms of the "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+# 
+# Initial Contributors:
+# Accenture - Initial contribution
+#
+
+==name drvinfo
+
+==short-description
+
+Display information about the currently available drives.
+
+==argument string drive_letter optional
+
+The drive letter to display information about (e.g. C<drvinfo c:>). If not specified, information on all drives is displayed.
+
+==option bool v verbose
+
+Display more detailed information.
+
+==option bool H human
+
+Display sizes in human readable form.
+
+==option bool l long
+
+Display information one drive per line, similar to ls's --long option. The attributes have the following format:
+
+=over 5
+
+=item r
+
+read only
+
+=item e
+
+removable
+
+=item m
+
+RAM disk
+
+=back
+
+For example, C<re-> indicates a removable disk that is read-only. The attributes are followed by the drive letter, the free space on disk, the total disk size, and the volume name if there is one.
+
+==copyright
+
+Copyright (c) 2007-2010 Accenture. All rights reserved.
+
+==smoke-test
+
+drvinfo --long $Quiet
